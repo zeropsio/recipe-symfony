@@ -1,0 +1,5 @@
+/.devcontainer/
+/.github/
+/data/
+/.env.test
+/phpstan.neon.dist

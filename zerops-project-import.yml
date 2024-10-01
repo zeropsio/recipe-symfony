@@ -1,0 +1,35 @@
+#yamlPreprocessor=on
+project:
+  name: recipe-symfony
+  tags:
+    - zerops-recipe
+
+services:
+  - hostname: app
+    type: php-nginx@8.3
+    buildFromGit: https://github.com/zeropsio/recipe-symfony@main
+    enableSubdomainAccess: true
+    envSecrets:
+      APP_SECRET: <@generateRandomString(<32>)>
+
+  - hostname: db
+    type: postgresql@16
+    mode: NON_HA
+    priority: 10
+
+  - hostname: redis
+    type: keydb@6
+    mode: NON_HA
+    priority: 10
+
+  - hostname: adminerevo
+    type: php-apache@8.3
+    buildFromGit: https://github.com/zeropsio/recipe-adminerevo@main
+    enableSubdomainAccess: true
+    maxContainers: 1
+
+  - hostname: mailpit
+    type: go@1
+    buildFromGit: https://github.com/zeropsio/recipe-mailpit@main
+    enableSubdomainAccess: true
+    maxContainers: 1

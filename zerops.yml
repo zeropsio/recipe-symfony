@@ -1,0 +1,24 @@
+zerops:
+  - setup: app
+    build:
+      base: php@8.3
+      buildCommands:
+        - composer install --optimize-autoloader --no-dev
+        - php bin/console asset-map:compile
+        - php bin/console cache:warmup
+      deployFiles: ./
+      cache:
+        - vendor
+        - composer.lock
+      envVariables:
+        APP_ENV: prod
+    run:
+      base: php-nginx@8.3
+      initCommands:
+        - php bin/console doctrine:migrations:migrate
+      envVariables:
+        APP_ENV: prod
+        TRUSTED_PROXIES: 127.0.0.1,10.0.0.0/8
+        DATABASE_URL: "${db_connectionString}/${db_dbName}?serverVersion=16&charset=utf8"
+        MAILER_DSN: "smtp://mailpit:1025"
+      documentRoot: public
