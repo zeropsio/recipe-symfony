@@ -24,7 +24,7 @@ services:
 
   - hostname: adminerevo
     type: php-apache@8.3
-    buildFromGit: https://github.com/zeropsio/recipe-adminerevo@main
+    buildFromGit: https://github.com/zeropsio/recipe-adminer@main
     enableSubdomainAccess: true
     maxContainers: 1
 
