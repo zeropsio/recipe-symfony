@@ -13,7 +13,7 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
-        handler_id: '%env(redis_connectionString)%/0'
+        handler_id: '%env(REDIS_URL)%/0'
         cookie_secure: auto
         cookie_samesite: lax
 
