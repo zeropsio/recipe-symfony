@@ -18,7 +18,7 @@ You can either click the deploy button to deploy directly on Zerops, or manually
 
 - Symfony running on a load balanced **Zerops PHP + Nginx** service
 - Zerops **PostgreSQL 16** service as database
-- Zerops KeyDB (**Redis**) service for session storage
+- Zerops Valkey (**Redis**) service for session storage
 - Setup for Doctrine **database migrations**
 - Logs set up to use **syslog** and accessible through Zerops GUI
 - Utilization of Zerops built-in **environment variables** system
@@ -31,7 +31,8 @@ You can either click the deploy button to deploy directly on Zerops, or manually
 
 Base of the recipe is ready for production, the difference comes down to:
 
-- Use highly available version of the PostgreSQL database (change `mode` from `NON_HA` to `HA` in recipe YAML, `db` service section)
+- Use highly available version of the PostgreSQL database (change `type` from `postgresql:single@16` to `postgresql:ha@16` in recipe YAML, `db` service section)
+- Switch to `oltp-production` profile for the PostgreSQL database
 - Use at least two containers for Symfony service to achieve high reliability and resilience (add `minContainers: 2` in recipe YAML, `app` service section)
 - Use production-ready third-party SMTP server instead of Mailpit (change `MAILER_DSN` env variable in `./zerops.yml` file)
 - Disable public access to Adminer or remove it altogether (remove service `adminer` from recipe YAML)
